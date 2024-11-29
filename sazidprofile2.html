@@ -1,0 +1,86 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Google Maps Address Geocoding</title>
+    <script src="https://maps.googleapis.com/maps/api/js?key=YOUR_API_KEY&libraries=places"></script>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            padding: 20px;
+            background-color: #f4f4f4;
+        }
+        h3 {
+            color: #333;
+            font-size: 24px;
+            font-weight: bold;
+            text-align: center;  /* Center the title */
+            margin-bottom: 20px; /* Space below the title */
+        }
+        input[type="text"] {
+            padding: 10px;
+            width: 300px;
+            margin-bottom: 10px;
+            font-size: 16px;
+        }
+        button {
+            padding: 10px 20px;
+            background-color: #4CAF50;
+            color: white;
+            border: none;
+            cursor: pointer;
+        }
+        button:hover {
+            background-color: #45a049;
+        }
+        #coordinates {
+            margin-top: 20px;
+            font-weight: bold;
+            color: #333;
+        }
+        img {
+            max-width: 100%;
+            height: auto;
+            margin-bottom: 20px;
+        }
+    </style>
+</head>
+<body>
+
+<h3>Address to Latitude and Longitude</h3>
+
+<!-- Image added here -->
+<img src="https://i.postimg.cc/fTRt7sbw/423-2.jpg" alt="Image">
+
+<!-- Input field for address -->
+<input type="text" id="address" placeholder="Enter address here" autofocus>
+<button onclick="geocodeAddress()">Get Coordinates</button>
+
+<p id="coordinates"></p>
+
+<script>
+    // Initialize the geocoder
+    const geocoder = new google.maps.Geocoder();
+
+    // Function to geocode the address
+    function geocodeAddress() {
+        const address = document.getElementById('address').value;
+        
+        geocoder.geocode({ 'address': address }, function(results, status) {
+            if (status === google.maps.GeocoderStatus.OK) {
+                // If successful, display the coordinates
+                const lat = results[0].geometry.location.lat();
+                const lng = results[0].geometry.location.lng();
+                document.getElementById('coordinates').innerHTML = 
+                    `Latitude: ${lat} <br>Longitude: ${lng}`;
+            } else {
+                // If geocoding fails, show an error
+                document.getElementById('coordinates').innerHTML = 'Geocode was not successful for the following reason: ' + status;
+            }
+        });
+    }
+</script>
+
+</body>
+</html>
